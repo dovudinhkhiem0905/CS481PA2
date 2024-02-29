@@ -6,6 +6,14 @@
 # once have the classifier done, save it into CSV file
 # binary decision model, hashtable will work, but our model might not work
 # ====================================================
+# For the dataset, I put in into a folder first then place into it.
+# You NEED to download the file yourself, it is too big so we can't upload to GitHub
+# the directory is:
+#       Original dataset: dataset/Reviews.csv
+#       After clean-up: dataset/Reviews_clean.csv
+#       After classifier: dataset/Reviews_classifier.csv
+# ====================================================
+
 import sys
 from sys import argv
 
@@ -34,4 +42,10 @@ if __name__ == '__main__':
 
     # This part placehold for store classifier to CSV
 
-    # This part placehold for
+    # This part placehold for last 20% test
+
+    # This part placehold for confusion matrix
+
+    # This part placehold for Sentence with naive bayes classifier
+
+
