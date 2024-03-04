@@ -14,8 +14,14 @@
 #       After classifier: dataset/Reviews_classifier.csv
 # ====================================================
 
+# ++++++++++++++++++
+# Important note:
+# test_data := the last 20% data will be assign in test_data after read file
+# train_data := the {tran_size}% train data will be assign in train_data
+# ++++++++++++++++++
+
 import sys
-from sys import argv
+import pandas as pd
 
 if __name__ == '__main__':
     # handle the input from the parameter
@@ -32,11 +38,14 @@ if __name__ == '__main__':
             pass
 
     print(f'Training set size: {train_size}%')
-
-    # finished the first printing, conver train size back to float number for future calculation
     train_size = train_size / 100
 
     # This part placehold for read in data
+    df = pd.read_csv('dataset/Reviews.csv')
+    # print(df.iloc[7, 8]) this return the location value from the array
+    # print(f'row in df:{len(df)}') this return the total row from the array
+    test_data = df[int(len(df)*0.8):]
+    train_data = df[:int(len(df)*train_size)]
 
     # This part placehold for build classifier
 
