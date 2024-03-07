@@ -1,32 +1,27 @@
 # This coding exercise is done by 
 #   - Jiecheng Mei
 #   - Khiem Do
-# ====================================================
-# Hint from Professor
-# once have the classifier done, save it into CSV file
-# binary decision model, hashtable will work, but our model might not work
-# ====================================================
-# For the dataset, I put in into a folder first then place into it.
-# You NEED to download the file yourself, it is too big so we can't upload to GitHub
-# the directory is:
-#       Original dataset: dataset/Reviews.csv
-#       After clean-up: dataset/Reviews_clean.csv
-#       After classifier: dataset/Reviews_classifier.csv
-# ====================================================
-
-# ++++++++++++++++++
-# Important note:
-# test_data := the last 20% data will be assign in test_data after read file
-# train_data := the {tran_size}% train data will be assign in train_data
-# ++++++++++++++++++
-
 import sys
 import pandas as pd
+import os
+
+
+def pre_process_data(t_size: float):
+    df = pd.read_csv('dataset/Reviews.csv')
+    # print(df.iloc[row, column]) this return the location value from the array
+    # print(f'row in df:{len(df)}') this return the total row from the array
+    data_test = df[int(len(df) * 0.8):]
+    data_train = df[1:int(len(df) * train_size)]
+    test_data_simplify = data_test.iloc[:, [6, 8, 9]]
+    train_data_simplify = data_train.iloc[:, [6, 8, 9]]
+    return test_data_simplify, train_data_simplify
+
 
 if __name__ == '__main__':
-    # handle the input from the parameter
-    # this will restrict the input between 20 and 80 and if 'yes' receive 80 instead.
+    # handles the input from the parameter
+    tagged_word = {}
     train_size = 80
+
     if len(sys.argv) == 2:
         try:
             arg_val = int(sys.argv[1])
@@ -36,25 +31,34 @@ if __name__ == '__main__':
                 raise ValueError
         except ValueError:
             pass
+    print(f'Mei Jiecheng A20439795, Khiem Do A20483713 solution:\n'
+          f'Training set size = {train_size}%')
 
-    print(f'Training set size: {train_size}%')
-    train_size = train_size / 100
+    # handles if the dataset is existed
+    csv_files = []
+    directory = './dataset/results'
+    for filename in os.listdir(directory):
+        if filename.endswith('.csv'):
+            filename = filename.split('.' and '_')
+            if int(filename[0]) not in csv_files:
+                csv_files.append(int(filename[0]))
+    if train_size in csv_files:
+        print('Existing data file occur, automatically using pre trained data')
 
-    # This part placehold for read in data
-    df = pd.read_csv('dataset/Reviews.csv')
-    # print(df.iloc[7, 8]) this return the location value from the array
-    # print(f'row in df:{len(df)}') this return the total row from the array
-    test_data = df[int(len(df)*0.8):]
-    train_data = df[:int(len(df)*train_size)]
+    else:
+        train_size = train_size / 100
+        test_data, train_data = pre_process_data(train_size)
 
-    # This part placehold for build classifier
 
-    # This part placehold for store classifier to CSV
+    # This part placehold for store count table to CSV
 
     # This part placehold for last 20% test
 
     # This part placehold for confusion matrix
 
     # This part placehold for Sentence with naive bayes classifier
+    # P(label|S) = P(label)*P(word1|label)*P(word2|label)...
 
-
+    while True:
+        userInput = input("Enter your sentence:\nSentence S:")
+        # placehold for naive bayes classifier
