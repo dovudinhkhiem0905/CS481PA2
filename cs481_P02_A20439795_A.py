@@ -8,7 +8,7 @@ import os
 
 
 # 删除干扰物并且标记单词
-def split_words(sentence, tag):
+def split_count_words(sentence, tag):
     massive_words = []
     chars_to_remove = [',', '.', '-', '!', '\"']
     for char in chars_to_remove:
@@ -65,7 +65,7 @@ def pre_process_train_data(t_size: int):
         summary = row.iloc[1]
         text = row.iloc[2]
         sentence = f'{summary} {text}'
-        massive_words_dataset = split_words(sentence, tag)
+        massive_words_dataset = split_count_words(sentence, tag)
     train_dataset_1 = count_words(massive_words_dataset, 1)
     train_dataset_2 = count_words(massive_words_dataset, 2)
     train_dataset_3 = count_words(massive_words_dataset, 3)
@@ -92,7 +92,7 @@ def pre_process_test_data():
         summary = row.iloc[1]
         text = row.iloc[2]
         sentence = f"{summary} {text}"
-        massive_words_dataset = split_words(sentence, tag)
+        massive_words_dataset = split_count_words(sentence, tag)
     test_dataset_1 = count_words(massive_words_dataset, 1)
     test_dataset_2 = count_words(massive_words_dataset, 2)
     test_dataset_3 = count_words(massive_words_dataset, 3)
