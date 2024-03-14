@@ -8,7 +8,7 @@ import os
 import time
 
 
-# 删除干扰物并且标记单词
+# delete some character and split the sentence to words
 def split_count_words(sentence, tag):
     massive_words = []
     chars_to_remove = [',', '.', '-', '!', '\"', ':', ')', '(']
@@ -21,7 +21,7 @@ def split_count_words(sentence, tag):
     return massive_words
 
 
-# 数数， 返回只有一个label的数值，假如需要别的label，需要从main那改变
+# count the tag from massive dataset to store dataset
 def count_words(dataset):
     store_data = {}
     for x in range(len(dataset)):
@@ -162,6 +162,7 @@ if __name__ == '__main__':
         train_data = pre_process_train_data(train_size)
 
     print("[=TEST=] See this message means counter is working properly")
+
     # This part placehold for confusion matrix
 
     # This part placehold for Sentence with naive bayes classifier
