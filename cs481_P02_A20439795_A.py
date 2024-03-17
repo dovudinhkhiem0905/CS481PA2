@@ -6,7 +6,6 @@ import sys
 import pandas as pd
 import os
 import time
-from functools import reduce
 
 
 # delete some character and split the sentence to words
@@ -25,18 +24,25 @@ def split_count_words(sentence, tag):
 # count the tag from massive dataset to store dataset
 def count_words(dataset):
     store_data = {}
-    total_label_counts = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0}  # Initialize label counts
-    
     for x in dataset:
         word, tag = x[0], x[1]
-        tag_str = str(tag)  # Ensure tag is string for key consistency
+        if not isinstance(word, str):
+            word = str(word)
         if word not in store_data:
-            store_data[word] = {"total": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+            store_data[word] = {"total": 0, "one": 0, "two": 0, "three": 0, "four": 0, "five": 0}
+        # total count
         store_data[word]["total"] += 1
-        store_data[word][tag_str] += 1
-        total_label_counts[tag_str] += 1  # Update total label counts
-    
-    return store_data, total_label_counts
+        if tag == 1:
+            store_data[word]["one"] += 1
+        elif tag == 2:
+            store_data[word]["two"] += 1
+        elif tag == 3:
+            store_data[word]["three"] += 1
+        elif tag == 4:
+            store_data[word]["four"] += 1
+        elif tag == 5:
+            store_data[word]["five"] += 1
+    return store_data
 
 
 def write_to_local(dataset, file_name, dir_results):
@@ -105,37 +111,6 @@ def pre_process_test_data():
     _test_enclaps = time.time() - _test_start
     print(f'Total test time take: {_test_enclaps}')
     return test_dataset
-
-
-# # Calculate the size of the dictionary
-# def calculate_vocab_size(store_data):
-#     return len(store_data)
-
-
-# # P(label)
-# def probability_of_label(label, total_label_counts):
-#     total_counts = sum(total_label_counts.values())
-#     return total_label_counts[label] / total_counts if total_counts > 0 else 0
-
-
-# # P(word | label)
-# def probability_of_word_given_label(word, label, store_data, total_label_counts, vocab_size):
-#     word_data = store_data.get(word, {"total": 0, label: 0})
-#     word_label_count = word_data[label] + 1  # Laplace Smoothing
-#     total_words_for_label = sum(item[label] for item in store_data.values()) + vocab_size
-#     return word_label_count / total_words_for_label
-
-
-# def classify_sentence(sentence, store_data, total_label_counts, vocab_size):
-#     words = split_count_words(sentence, '')  # Assumes preprocessing to match training
-#     label_probs = {}
-#     for label in total_label_counts:
-#         label_prob = probability_of_label(label, total_label_counts)
-#         word_probs = [probability_of_word_given_label(word[0], label, store_data, total_label_counts, vocab_size) for word in words]
-#         label_probs[label] = label_prob * reduce(lambda x, y: x * y, word_probs, 1)
-    
-#     best_label = max(label_probs, key=label_probs.get)
-#     return best_label
 
 
 if __name__ == '__main__':
