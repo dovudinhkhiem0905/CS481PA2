@@ -24,8 +24,8 @@ def split_count_words(sentence, tag):
 # count the tag from massive dataset to store dataset
 def count_words(dataset):
     store_data = {}
-    for x in range(len(dataset)):
-        word, tag = dataset.pop(0)
+    for x in dataset:
+        word, tag = x[0], x[1]
         if not isinstance(word, str):
             word = str(word)
         if word not in store_data:
@@ -137,10 +137,9 @@ if __name__ == '__main__':
     _dir_path = './dataset/test'
     for filename in os.listdir(_dir_path):
         if filename.endswith('.json'):
-            filename = filename.split('.')
-            if filename[0] not in json_files_test:
-                json_files_test.append(filename[0])
-    if len(json_files_test) != 5:
+            if filename not in json_files_test:
+                json_files_test.append(filename)
+    if "test.json" not in json_files_test:
         test_data = pre_process_test_data()
     else:
         print('Existing TEST dataset detected...')
@@ -151,15 +150,14 @@ if __name__ == '__main__':
     _dir_path = './dataset/train'
     for filename in os.listdir(_dir_path):
         if filename.endswith('.json'):
-            filename = filename.split('.' and '_')
-            if int(filename[0]) not in json_files_train:
-                json_files_train.append(int(filename[0]))
+            if filename not in json_files_train:
+                json_files_train.append(filename)
 
-    if train_size in json_files_train:
+    if f"{train_size}.json" not in json_files_train:
+        train_data = pre_process_train_data(train_size)
+    else:
         print('Existing TRAIN dataset detected...')
         train_data = load_from_local(f'{train_size}.json', _dir_path)
-    else:
-        train_data = pre_process_train_data(train_size)
 
     print("[=TEST=] See this message means counter is working properly")
 
