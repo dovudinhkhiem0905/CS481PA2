@@ -232,7 +232,7 @@ def test_classifier(test_data, classifier):
     print(f"Accuracy: {accuracy:.4f}")
     print(f"F-Score: {f_score:.4f}")
 
-# Assuming the test data is in the format of a dictionary {'one': ['sentence1', ...], 'two': [...], ...}
+
 test_data = load_from_local('test.json', './dataset/test')
 classifier = load_from_local('80.json', './dataset/train')
 
